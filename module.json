@@ -1,0 +1,254 @@
+{
+    "name":"TheatreMix",
+    "type":"OSC",
+    "path":"Software",
+
+    "version":"1.0.0",
+    "description":"Module to control James Holt's TheatreMix Software for DCA mixing",
+
+    "url":"",
+    "downloadURL":"",
+
+    "hasInput":false,
+    "hasOutput":true,
+    "alwaysShowValues":true,
+
+    "hideDefaultCommands": true,
+
+    "hideDefaultParameters":
+    [
+        "autoAdd",
+        "splitArguments",
+        "useHierarchy",
+        "autoFeedback",
+        "colorSendMode",
+        "booleanSendMode",
+        "clearValues",
+        "oscOutputs/oscOutput/remotePort",
+        "oscOutputs/oscOutput/listenToFeedback"
+    ],
+
+    "defaults":
+    {
+        "autoAdd":false,
+        "OSC Outputs":{
+            "OSC Output":{
+                "local":true,
+                "remotePort":32000,
+                "listenToFeedback":true
+            }
+        }
+    },
+
+    "scripts": ["TheatreMix.js"],
+
+    "parameters":
+    {
+        "Subscribe":{
+            "type":"Boolean",
+            "description":"Subscribe to Events sent back from TheatreMix (cue fired, LR Ganging, Record offsets",
+            "default":true
+        }
+    },
+
+    "values":
+    {
+        "Subscription Active":{
+            "type":"Boolean",
+            "description":"Is the subscription active and connected?",
+            "default":false,
+            "readOnly":true
+        },
+        "Cue Fired":{
+            "type":"Trigger",
+            "description":"Triggers when a cue fired message is received",
+            "readOnly":true
+        },
+        "Last Cue Fired":{
+            "type":"Integer",
+            "description":"Which cue has last been fired",
+            "default":0,
+            "readOnly":true
+        },
+        "Gang L/R Level":{
+            "type":"Boolean",
+            "description":"LR Fader gang level (-inf is off, otherwise on)",
+            "default":false,
+            "readOnly":true,
+            "shortName":"gangLevel"
+        },
+        "Record Offsets Status":{
+            "type":"Boolean",
+            "description": "Is Record Offsets on?",
+            "default":false,
+            "readOnly":true,
+            "shortName":"offsetsStatus"
+        }
+    },
+
+    "commands":
+    {
+        "Set Subscribed":
+        {
+            "callback":"setSubscribed",
+            "parameters":
+            {
+                "Subscribed":
+                {
+                    "type":"Boolean",
+                    "description":"Set the Subscribe Parameter in Chataigne",
+                    "default":true
+                }
+            }
+        },
+        "Go":
+        {
+            "menu":"Cues",
+            "callback":"sendGo"
+        },
+        "Back":
+        {
+            "menu":"Cues",
+            "callback":"sendBack"
+        },
+        "Jump":
+        {
+            "menu":"Cues",
+            "callback":"sendJump",
+            "parameters":
+            {
+                "Number":
+                {
+                    "type":"String",
+                    "description":"Cue number to jump to",
+                    "default":1
+                }
+            }
+        },
+        "Jump to Selected":
+        {
+            "menu":"Cues",
+            "callback":"sendJumpToSelected"
+        },
+        "Mark Cue":
+        {
+            "menu":"Cues",
+            "callback":"sendMark",
+            "parameters":
+            {
+                "Mode":
+                {
+                    "type":"Enum",
+                    "description":"Mark Current Cue, or mark Selected cue?",
+                    "options":
+                    {
+                        "Current":"current",
+                        "Selected":"selected"
+                    }
+                },
+                "Notes":
+                {
+                    "type":"String",
+                    "description":"Notes to add to the marked cue",
+                    "default":""
+                }
+            }
+        },
+        "Insert Cue":
+        {
+            "menu":"Cues",
+            "callback":"sendInsert"
+        },
+        "Clone Cue":
+        {
+            "menu":"Cues",
+            "callback":"sendClone"
+        },
+        "Delete Cue":
+        {
+            "menu":"Cues",
+            "callback":"sendDelete"
+        },
+        "Set Lock":
+        {
+            "menu":"UI",
+            "callback":"sendLock",
+            "parameters":
+            {
+                "Lock":
+                {
+                    "type":"Boolean",
+                    "description":"Send locked or unlocked?",
+                    "default":1
+                }
+            }
+        },
+        "Select":
+        {
+            "menu":"UI",
+            "callback":"sendSelect",
+            "parameters":
+            {
+                "Mode":
+                {
+                    "type":"Enum",
+                    "description":"Move selection up, down, or to current cue",
+                    "options":
+                    {
+                        "Up":"up",
+                        "Down":"down",
+                        "Current":"current"
+                    }
+                }
+            }
+        },
+        "Undo":
+        {
+            "menu":"UI",
+            "callback":"sendUndo"
+        },
+        "Redo":
+        {
+            "menu":"UI",
+            "callback":"sendUndo"
+        },
+        "Toggle Backup":
+        {
+            "menu":"Mics",
+            "callback":"toggleBackup",
+            "parameters":
+            {
+                "Channel":
+                {
+                    "type":"String",
+                    "description":"Toggle the backup channel (prefix Aux-Ins with A)",
+                    "default":1
+                }
+            }
+        },
+        "Allocate Spare":
+        {
+            "menu":"Mics",
+            "callback":"allocateSpare",
+            "parameters":
+            {
+                "Channel":
+                {
+                    "type":"String",
+                    "description":"Allocate the spare backup channel (prefix Aux-Ins with A)",
+                    "default":1
+                }
+            }
+        },
+        "Toggle Spare":
+        {
+            "menu":"Mics",
+            "callback":"toggleSpare"            
+        },
+        "Remove Spare Allocation":
+        {
+            "menu":"Mics",
+            "callback":"removeSpare"            
+        }
+    }
+}
