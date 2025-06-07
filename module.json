@@ -3,11 +3,11 @@
     "type":"OSC",
     "path":"Software",
 
-    "version":"1.0.0",
+    "version":"1.1.0",
     "description":"Module to control James Holt's TheatreMix Software for DCA mixing",
 
-    "url":"",
-    "downloadURL":"",
+    "url":"https://github.com/CJWestProductions/TheatreMix-Chataigne-Module",
+    "downloadURL":"https://github.com/CJWestProductions/TheatreMix-Chataigne-Module/archive/refs/heads/main.zip",
 
     "hasInput":false,
     "hasOutput":true,
@@ -65,7 +65,7 @@
             "readOnly":true
         },
         "Last Cue Fired":{
-            "type":"Integer",
+            "type":"Float",
             "description":"Which cue has last been fired",
             "default":0,
             "readOnly":true
@@ -210,7 +210,7 @@
         "Redo":
         {
             "menu":"UI",
-            "callback":"sendUndo"
+            "callback":"sendRedo"
         },
         "Toggle Backup":
         {
@@ -249,6 +249,29 @@
         {
             "menu":"Mics",
             "callback":"removeSpare"            
+        },
+        "Record Offsets":
+        {
+            "menu":"Offsets",
+            "callback":"recordOffsets",
+            "parameters":
+            {
+                "Mode":
+                {
+                    "type":"Enum",
+                    "description":"If not in toggle mode, on and off will use the status value to only send if needed. Subscribe should be on",
+                    "options":{
+                        "Toggle":0,
+                        "On":1,
+                        "Off":2
+                    }
+                }
+            }
+        },
+        "Clone Offsets":
+        {
+            "menu":"Offsets",
+            "callback":"cloneOffsets"
         }
     }
 }

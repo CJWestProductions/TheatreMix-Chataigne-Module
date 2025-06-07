@@ -18,7 +18,7 @@ function init()
     local.register("/ganglr","gangCallback");
     local.register("/recordoffsets","offsetsCallback");
 
-    if(vals.subscriptionActive.get()) sendSubscribe();
+    if(params.subscribe.get()) sendSubscribe();
 }
 
 function update(deltaTime)
@@ -68,7 +68,7 @@ function oscEvent(address, args)
 	script.log("OSC Message received "+address+", "+args.length+" arguments");
 	for(var i=0; i < args.length; i++)
 	{
-		script.log(" > "+args[i]);
+		script.log(" > "+args[i]+"  - type:  "+typeof(args[i]));
 	}
 }
 
@@ -87,7 +87,7 @@ function subscribeCallback(address,args)
 function cueCallback(address,args)
 {
     vals.cueFired.trigger();
-    vals.lastCueFired.set(args[0]);
+    vals.lastCueFired.set(parseFloat(args[0]));
 }
 
 function gangCallback(address,args)
@@ -126,7 +126,7 @@ function sendJump(cue)
 
 function sendJumpToSelected()
 {
-    local.send("/jumpselected");
+    local.send("/jump","selected");
 }
 
 function sendMark(mode,notes)
@@ -188,4 +188,16 @@ function toggleSpare()
 function removeSpare()
 {
     local.send("/removespare");
+}
+
+function recordOffsets(mode)
+{
+    if(mode == 1 && vals.offsetsStatus.get()) return;
+    if(mode == 2 && !vals.offsetsStatus.get()) return;
+    local.send("/recordoffsets");
+}
+
+function cloneOffsets()
+{
+    local.send("/cloneoffsets");
 }

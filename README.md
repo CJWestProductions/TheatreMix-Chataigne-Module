@@ -44,8 +44,21 @@ Mics:
 - Toggle Spare
 - Remove Spare
 
+Offsets:
+- Record Offsets
+    - Mode (Enum: Toggle, On, Off) 
+        - Note: For On or Off mode, Chataigne must be actively subscribed to TheatreMix updates
+- Clone Offsets
+
 
 ## Changelog
+v1.1.0
+- Add Offsets (record, clone)
+- Bug fixes
+    - Subscribe on load/init
+    - Cue number is float
+    - fix redo, jump selected
+- github links in module.json
 
 v1.0.0:
--basic functionality
+- basic functionality
